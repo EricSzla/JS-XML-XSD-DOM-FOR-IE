@@ -1,0 +1,35 @@
+<html>
+
+<head>
+		<title>XDS/XML For IE</title>
+	</head>
+	
+	<body>
+		<h1>XDS - Parsing XML with a schema</h1>
+	</body>
+	
+	<script type="text/javascript">
+		//// Load XML file...
+		var doc = new ActiveXObject("MSXML2.DOMDocument.6.0");
+		doc.async = false;
+		doc.validateOnParse=true;
+		doc.load("order.xml");
+		/// Load Schema file...
+		var nameSpace = doc.documentElement.namespaceURI;
+		var xmlSchema = new ActiveXObject("MSXML2.XMLSchemaCache.6.0");
+		xmlSchema.add(nameSpace,"order.xsd");
+		doc.schemas = xmlSchema;
+		
+		doc.load("order.xml");
+		/// Parse/Validate XML file...
+		var error = doc.parseError;
+		if (error != "")
+		{
+			alert(error.reason);
+		}
+		/// Write HTML output...
+		document.write("XML Root Tag Name: " + doc.documentElement.tagName + "<br/><br/>");
+		//rootChildren = doc.documentElement.childNodes
+		//rootChildren[i].firstChild.nodeValue
+	</script>
+</html>
